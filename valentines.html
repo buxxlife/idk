@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question for You</title>
+    <title>A Special Question for Ashley</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600&display=swap');
 
@@ -185,6 +185,28 @@
         #noBtn1 {
             position: fixed;
             z-index: 9999;
+        }
+
+        /* Q3 buttons container - relative for absolute positioning */
+        #btnContainer3 {
+            position: relative;
+        }
+
+        #yesBtn3 {
+            position: relative;
+            z-index: 10;
+        }
+
+        #noBtn3 {
+            transition: all 0.5s ease;
+        }
+
+        #noBtn3.hidden-behind {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            opacity: 0.3;
         }
 
         /* No button that transforms */
@@ -371,6 +393,31 @@
             font-style: italic;
             color: #ff6b81;
         }
+
+        /* Calendar button */
+        .btn-calendar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(66, 133, 244, 0.4);
+            margin-top: 25px;
+            text-decoration: none;
+        }
+
+        .btn-calendar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(66, 133, 244, 0.6);
+        }
     </style>
 </head>
 <body>
@@ -395,7 +442,7 @@
             </div>
             <!-- Replace with your photo: images/photo1.jpg -->
             <img src="https://placekitten.com/400/400" alt="Us" class="couple-image">
-            <h1 class="title">Hey Beautiful!</h1>
+            <h1 class="title">Hey Ashley!</h1>
             <p class="question">
                 I have a <span class="highlight">very important question</span> to ask you...
                 <br><br>
@@ -455,23 +502,26 @@
 
         <!-- Success Page -->
         <div class="success-card hidden" id="successPage">
-            <h1 class="success-title">Yay!!! &#127881;</h1>
+            <h1 class="success-title">Yay Ashley!!! &#127881;</h1>
             <div class="hearts-row">&#128149; &#128149; &#128149; &#128149; &#128149;</div>
             <!-- Replace with your photo: images/photo4.jpg -->
             <img src="https://placekitten.com/403/403" alt="Us together" class="success-image">
             <p class="reservation-text">
-                Congratulations!
+                Congratulations Ashley!
                 <span class="reservation-highlight">You have made a reservation in my heart</span>
             </p>
             <div class="date-badge">
                 &#128197; February 14th &#128149;
             </div>
-            <div class="hearts-row" style="margin-top: 30px;">
+            <div class="hearts-row" style="margin-top: 20px;">
                 &#128571; &#128149; &#128571;
             </div>
-            <p style="margin-top: 20px; color: #888; font-size: 1rem;">
+            <p style="margin-top: 15px; color: #888; font-size: 1rem;">
                 I can't wait to spend Valentine's Day with you!
             </p>
+            <a href="#" id="calendarBtn" class="btn-calendar" onclick="addToCalendar()">
+                &#128197; Add to Google Calendar
+            </a>
         </div>
     </div>
 
@@ -561,19 +611,15 @@
         }
 
         // ============================================
-        // QUESTION 3: No transforms into Yes
+        // QUESTION 3: No hides behind Yes button
         // ============================================
         function transformNoToYes() {
             const noBtn = document.getElementById('noBtn3');
 
-            // Transform it!
-            noBtn.classList.add('transformed');
-            noBtn.innerHTML = "YES! &#128149;";
-
-            // Now clicking it goes to success
-            noBtn.onclick = function() {
-                showSuccess();
-            };
+            // Hide behind the Yes button!
+            noBtn.classList.add('hidden-behind');
+            noBtn.textContent = "I'm hiding!";
+            noBtn.disabled = true;
         }
 
         // ============================================
@@ -656,6 +702,27 @@
                     container.appendChild(heart);
                 }, i * 100);
             }
+        }
+
+        // ============================================
+        // Google Calendar
+        // ============================================
+        function addToCalendar() {
+            // Valentine's Day 2025 date details
+            const event = {
+                title: "Valentine's Day Date with Ashley ❤️",
+                date: "20250214", // February 14, 2025
+                startTime: "180000", // 6:00 PM
+                endTime: "220000", // 10:00 PM
+                description: "Our special Valentine's Day date! 💕",
+                location: "" // Add location if you want
+            };
+
+            // Google Calendar URL format
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.date}T${event.startTime}/${event.date}T${event.endTime}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+
+            // Open in new tab
+            window.open(googleCalendarUrl, '_blank');
         }
 
         // Initialize
