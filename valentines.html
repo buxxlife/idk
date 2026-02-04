@@ -545,25 +545,19 @@
         });
 
         // ============================================
-        // QUESTION 2: Click No -> Auto clicks Yes
+        // QUESTION 2: Click No -> Transforms to Yes
         // ============================================
         function clickedNo2() {
             const noBtn = document.getElementById('noBtn2');
-            const yesBtn = document.getElementById('yesBtn2');
 
-            // Change no button appearance
-            noBtn.textContent = "Oops! Wrong one!";
-            noBtn.style.background = '#ffcccc';
-            noBtn.disabled = true;
+            // Transform into Yes button
+            noBtn.classList.add('transformed');
+            noBtn.innerHTML = "Yes! &#128149;";
 
-            // Highlight yes button
-            yesBtn.style.transform = 'scale(1.2)';
-            yesBtn.style.boxShadow = '0 0 40px rgba(255, 107, 129, 1)';
-
-            // Auto proceed after delay
-            setTimeout(() => {
-                yesBtn.click();
-            }, 800);
+            // Second click goes to next question
+            noBtn.onclick = function() {
+                nextQuestion(3);
+            };
         }
 
         // ============================================
