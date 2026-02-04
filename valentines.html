@@ -57,6 +57,10 @@
             z-index: 1;
         }
 
+        .container.chaos-mode {
+            z-index: 50;
+        }
+
         .quiz-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
@@ -551,20 +555,16 @@
             </div>
         </div>
 
-        <!-- Success Page -->
-        <div class="success-card hidden" id="successPage" style="padding: 25px 35px;">
-            <h1 style="font-family: 'Pacifico', cursive; font-size: 2.2rem; color: #ff6b81; margin: 0 0 10px 0;">Yay Ashley!!! 🎉</h1>
-            <p style="font-size: 1.2rem; color: #5a5a5a; margin: 8px 0;">Congratulations!</p>
-            <p style="font-family: 'Pacifico', cursive; font-size: 1.5rem; color: #ff6b81; margin: 5px 0;">You have made a reservation in my heart</p>
-            <div style="margin-top: 15px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
-                <div class="date-badge" style="margin: 0; padding: 12px 30px; font-size: 1.2rem;">📅 February 14th 💕</div>
-                <a href="#" id="calendarBtn" class="btn-calendar" onclick="addToCalendar()" style="margin: 0; padding: 12px 25px; font-size: 1rem;">📅 Add to Google Calendar</a>
+        <!-- Success Page - MASSIVE TEXT -->
+        <div class="success-card hidden" id="successPage" style="padding: 30px 40px; position: relative; z-index: 100;">
+            <h1 style="font-family: 'Pacifico', cursive; font-size: 3.5rem; color: #ff6b81; margin: 0 0 15px 0; text-shadow: 3px 3px 6px rgba(255,107,129,0.4);">Yay Ashley!!! 🎉</h1>
+            <p style="font-size: 1.8rem; color: #5a5a5a; margin: 10px 0; font-weight: 600;">Congratulations!</p>
+            <p style="font-family: 'Pacifico', cursive; font-size: 2.2rem; color: #ff6b81; margin: 10px 0; text-shadow: 2px 2px 4px rgba(255,107,129,0.3);">You have made a reservation in my heart</p>
+            <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <div class="date-badge" style="margin: 0; padding: 20px 50px; font-size: 2rem; animation: glow 1s ease-in-out infinite, pulse 1s ease-in-out infinite;">📅 February 14th 💕</div>
+                <a href="#" id="calendarBtn" class="btn-calendar" onclick="addToCalendar()" style="margin: 0; padding: 18px 40px; font-size: 1.4rem;">📅 Add to Google Calendar</a>
             </div>
         </div>
-
-        <!-- CHAOS CONTAINERS -->
-        <div id="fireworksContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></div>
-        <div id="emojiRain" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998;"></div>
     </div>
 
     <script>
@@ -662,31 +662,96 @@
             }
         }
 
+        // Track chaos intensity
+        let chaosLevel = 100; // Start at 100%, decrease over time
+        let chaosIntervals = [];
+
         function showSuccess() {
             document.querySelectorAll('.quiz-card').forEach(card => {
                 card.classList.add('hidden');
             });
             document.getElementById('successPage').classList.remove('hidden');
+            document.querySelector('.container').classList.add('chaos-mode');
 
-            // UNLEASH THE CHAOS!!!
+            // PHASE 1: ABSOLUTE MAXIMUM CHAOS (0-5 seconds)
+            console.log('UNLEASHING CHAOS!!!');
+
+            // Initial flash and shake
             createFlash();
+            createFlash();
+            setTimeout(createFlash, 100);
+            setTimeout(createFlash, 200);
+
             shakeScreen();
             rainbowMode();
-            megaConfettiExplosion();
-            emojiTsunami();
-            fireworksShow();
-            giantHeartBurst();
-            sparkleEverywhere();
-            celebrateHearts();
 
-            // Keep the chaos going
-            setInterval(megaConfettiExplosion, 3000);
-            setInterval(emojiTsunami, 2000);
-            setInterval(sparkleEverywhere, 1500);
+            // IMMEDIATE EXPLOSION
+            megaConfettiExplosion(500); // 500 pieces!
+            emojiTsunami(100); // 100 emojis!
+            fireworksShow(20); // 20 fireworks!
+            giantHeartBurst(15); // 15 giant hearts!
+            sparkleEverywhere(50); // 50 sparkles!
+            celebrateHearts(150); // 150 floating hearts!
+
+            // More explosions
+            setTimeout(() => {
+                megaConfettiExplosion(400);
+                fireworksShow(15);
+                giantHeartBurst(10);
+            }, 500);
+
+            setTimeout(() => {
+                megaConfettiExplosion(300);
+                emojiTsunami(80);
+                fireworksShow(15);
+            }, 1000);
+
+            setTimeout(() => {
+                megaConfettiExplosion(300);
+                sparkleEverywhere(40);
+                giantHeartBurst(8);
+            }, 1500);
+
+            setTimeout(() => {
+                megaConfettiExplosion(200);
+                emojiTsunami(60);
+                fireworksShow(10);
+            }, 2500);
+
+            // PHASE 2: HIGH CHAOS (5-15 seconds) - still intense
+            setTimeout(() => {
+                chaosIntervals.push(setInterval(() => megaConfettiExplosion(150), 2000));
+                chaosIntervals.push(setInterval(() => emojiTsunami(40), 2500));
+                chaosIntervals.push(setInterval(() => fireworksShow(8), 3000));
+                chaosIntervals.push(setInterval(() => sparkleEverywhere(25), 2000));
+                chaosIntervals.push(setInterval(() => giantHeartBurst(5), 4000));
+            }, 5000);
+
+            // PHASE 3: MEDIUM CHAOS (15-30 seconds) - toning down
+            setTimeout(() => {
+                // Clear previous intervals
+                chaosIntervals.forEach(interval => clearInterval(interval));
+                chaosIntervals = [];
+
+                chaosIntervals.push(setInterval(() => megaConfettiExplosion(80), 3000));
+                chaosIntervals.push(setInterval(() => emojiTsunami(20), 4000));
+                chaosIntervals.push(setInterval(() => sparkleEverywhere(15), 3000));
+            }, 15000);
+
+            // PHASE 4: CALM (30+ seconds) - gentle celebration
+            setTimeout(() => {
+                // Clear previous intervals
+                chaosIntervals.forEach(interval => clearInterval(interval));
+                chaosIntervals = [];
+
+                // Just gentle confetti and occasional sparkles
+                chaosIntervals.push(setInterval(() => megaConfettiExplosion(30), 5000));
+                chaosIntervals.push(setInterval(() => sparkleEverywhere(10), 4000));
+            }, 30000);
         }
 
         // ============================================
-        // CHAOS EFFECTS
+        // CHAOS EFFECTS - Now with intensity parameter!
         // ============================================
 
         function createFlash() {
@@ -699,36 +764,34 @@
         function shakeScreen() {
             document.body.classList.add('shake-mode');
             setTimeout(() => document.body.classList.remove('shake-mode'), 500);
-            // Shake multiple times
-            setTimeout(() => {
-                document.body.classList.add('shake-mode');
-                setTimeout(() => document.body.classList.remove('shake-mode'), 500);
-            }, 1000);
-            setTimeout(() => {
-                document.body.classList.add('shake-mode');
-                setTimeout(() => document.body.classList.remove('shake-mode'), 500);
-            }, 2500);
+            // Shake multiple times for maximum effect
+            for (let i = 1; i <= 5; i++) {
+                setTimeout(() => {
+                    document.body.classList.add('shake-mode');
+                    setTimeout(() => document.body.classList.remove('shake-mode'), 500);
+                }, i * 800);
+            }
         }
 
         function rainbowMode() {
             document.body.classList.add('rainbow-mode');
         }
 
-        function megaConfettiExplosion() {
-            const colors = ['#ff6b81', '#ff8e9e', '#ffecd2', '#fcb69f', '#fff', '#ff69b4', '#ff1493', '#ffd700', '#ff4500', '#00ff00', '#00bfff', '#9400d3', '#ff00ff'];
+        function megaConfettiExplosion(count = 300) {
+            const colors = ['#ff6b81', '#ff8e9e', '#ffecd2', '#fcb69f', '#fff', '#ff69b4', '#ff1493', '#ffd700', '#ff4500', '#00ff00', '#00bfff', '#9400d3', '#ff00ff', '#ff0000', '#ffff00'];
             const shapes = ['circle', 'square', 'star', 'heart'];
 
-            // 300 pieces of confetti!!!
-            for (let i = 0; i < 300; i++) {
+            for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
                     confetti.className = 'mega-confetti';
                     confetti.style.left = Math.random() * 100 + '%';
                     confetti.style.top = '-20px';
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.zIndex = '10000';
 
                     const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                    const size = Math.random() * 15 + 8;
+                    const size = Math.random() * 20 + 10;
                     confetti.style.width = size + 'px';
                     confetti.style.height = size + 'px';
 
@@ -745,98 +808,102 @@
 
                     document.body.appendChild(confetti);
                     setTimeout(() => confetti.remove(), 2500);
-                }, i * 10);
+                }, i * 5);
             }
         }
 
-        function emojiTsunami() {
-            const emojis = ['💕', '💗', '💖', '💘', '❤️', '🩷', '😍', '🥰', '💝', '💞', '💓', '💟', '🎉', '🎊', '✨', '💫', '⭐', '🌟', '💥', '🔥', '🦋', '🌸', '🌺', '🌹', '💐'];
+        function emojiTsunami(count = 50) {
+            const emojis = ['💕', '💗', '💖', '💘', '❤️', '🩷', '😍', '🥰', '💝', '💞', '💓', '💟', '🎉', '🎊', '✨', '💫', '⭐', '🌟', '💥', '🔥', '🦋', '🌸', '🌺', '🌹', '💐', '🎀', '💎', '👑'];
 
-            // 50 emojis flying up from bottom
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const emoji = document.createElement('div');
                     emoji.className = 'emoji-particle';
                     emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
                     emoji.style.left = Math.random() * 100 + '%';
                     emoji.style.bottom = '-50px';
-                    emoji.style.fontSize = (Math.random() * 40 + 20) + 'px';
+                    emoji.style.fontSize = (Math.random() * 60 + 30) + 'px';
+                    emoji.style.zIndex = '10001';
                     document.body.appendChild(emoji);
                     setTimeout(() => emoji.remove(), 4000);
-                }, i * 80);
+                }, i * 40);
             }
         }
 
-        function fireworksShow() {
-            const colors = ['#ff6b81', '#ffd700', '#ff69b4', '#00ff00', '#00bfff', '#ff4500', '#9400d3'];
+        function fireworksShow(burstCount = 10) {
+            const colors = ['#ff6b81', '#ffd700', '#ff69b4', '#00ff00', '#00bfff', '#ff4500', '#9400d3', '#ff0000', '#ffff00', '#ff00ff'];
 
-            // Create 10 firework bursts
-            for (let burst = 0; burst < 10; burst++) {
+            for (let burst = 0; burst < burstCount; burst++) {
                 setTimeout(() => {
                     const centerX = Math.random() * window.innerWidth;
-                    const centerY = Math.random() * (window.innerHeight * 0.6);
+                    const centerY = Math.random() * (window.innerHeight * 0.7);
                     const color = colors[Math.floor(Math.random() * colors.length)];
 
-                    // Each burst has 30 particles
-                    for (let i = 0; i < 30; i++) {
+                    // Each burst has 40 particles for bigger explosions
+                    for (let i = 0; i < 40; i++) {
                         const particle = document.createElement('div');
                         particle.className = 'firework';
                         particle.style.background = color;
-                        particle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+                        particle.style.boxShadow = `0 0 15px ${color}, 0 0 30px ${color}, 0 0 45px ${color}`;
                         particle.style.left = centerX + 'px';
                         particle.style.top = centerY + 'px';
+                        particle.style.zIndex = '10002';
+                        particle.style.width = '12px';
+                        particle.style.height = '12px';
 
-                        const angle = (i / 30) * Math.PI * 2;
-                        const velocity = Math.random() * 150 + 100;
+                        const angle = (i / 40) * Math.PI * 2;
+                        const velocity = Math.random() * 200 + 150;
                         const dx = Math.cos(angle) * velocity;
                         const dy = Math.sin(angle) * velocity;
 
-                        particle.style.transform = `translate(${dx}px, ${dy}px)`;
-                        particle.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+                        particle.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
 
                         document.body.appendChild(particle);
 
                         requestAnimationFrame(() => {
-                            particle.style.transform = `translate(${dx * 3}px, ${dy * 3}px)`;
+                            particle.style.transform = `translate(${dx * 2}px, ${dy * 2}px)`;
                             particle.style.opacity = '0';
                         });
 
-                        setTimeout(() => particle.remove(), 1000);
+                        setTimeout(() => particle.remove(), 1200);
                     }
-                }, burst * 400);
+                }, burst * 200);
             }
         }
 
-        function giantHeartBurst() {
-            const hearts = ['💕', '💗', '💖', '❤️', '💝'];
+        function giantHeartBurst(count = 8) {
+            const hearts = ['💕', '💗', '💖', '❤️', '💝', '😍', '🥰', '💘'];
 
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'giant-heart';
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.left = (Math.random() * 80 + 10) + '%';
-                    heart.style.top = (Math.random() * 60 + 20) + '%';
-                    heart.style.fontSize = (Math.random() * 80 + 60) + 'px';
+                    heart.style.top = (Math.random() * 60 + 10) + '%';
+                    heart.style.fontSize = (Math.random() * 120 + 80) + 'px';
+                    heart.style.zIndex = '10003';
                     document.body.appendChild(heart);
                     setTimeout(() => heart.remove(), 2000);
-                }, i * 300);
+                }, i * 150);
             }
         }
 
-        function sparkleEverywhere() {
-            const sparkles = ['✨', '💫', '⭐', '🌟', '✦', '★'];
+        function sparkleEverywhere(count = 30) {
+            const sparkles = ['✨', '💫', '⭐', '🌟', '✦', '★', '💎', '🔥'];
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const sparkle = document.createElement('div');
                     sparkle.className = 'sparkle-burst';
                     sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
                     sparkle.style.left = Math.random() * 100 + '%';
                     sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.zIndex = '10004';
+                    sparkle.style.fontSize = (Math.random() * 40 + 20) + 'px';
                     document.body.appendChild(sparkle);
                     setTimeout(() => sparkle.remove(), 800);
-                }, i * 50);
+                }, i * 30);
             }
         }
 
@@ -855,21 +922,21 @@
             }
         }
 
-        function celebrateHearts() {
+        function celebrateHearts(count = 100) {
             const container = document.getElementById('heartsContainer');
-            const hearts = ['💕', '💗', '💖', '💘', '❤️', '😍', '🥰'];
+            const hearts = ['💕', '💗', '💖', '💘', '❤️', '😍', '🥰', '💝', '💓'];
 
-            // 100 hearts instead of 30!
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                     heart.style.left = Math.random() * 100 + '%';
-                    heart.style.fontSize = (Math.random() * 40 + 20) + 'px';
+                    heart.style.fontSize = (Math.random() * 50 + 25) + 'px';
                     heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    heart.style.zIndex = '9999';
                     container.appendChild(heart);
-                }, i * 50);
+                }, i * 30);
             }
         }
 
