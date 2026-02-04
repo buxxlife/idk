@@ -384,7 +384,7 @@
     <div class="sparkle">&#10022;</div>
 
     <!-- QUESTION 1: No button RUNS AWAY from cursor -->
-    <button class="btn-no" id="noBtn1">Not yet...</button>
+    <button class="btn-no" id="noBtn1">No</button>
 
     <div class="container">
         <div class="quiz-card" id="question1">
@@ -482,7 +482,7 @@
         const noBtn1 = document.getElementById('noBtn1');
         let btn1Visible = true;
 
-        // Position the button initially
+        // Position the button initially beside the Yes button
         function positionNoBtn1() {
             const card = document.getElementById('question1');
             if (card.classList.contains('hidden')) {
@@ -493,15 +493,18 @@
             noBtn1.style.display = 'block';
             btn1Visible = true;
 
-            // Start position near the Yes button
-            const container = document.getElementById('btnContainer1');
-            const rect = container.getBoundingClientRect();
-            noBtn1.style.left = (rect.left + rect.width / 2 + 80) + 'px';
-            noBtn1.style.top = (rect.top) + 'px';
+            // Position right next to the Yes button
+            const yesBtn = document.querySelector('#btnContainer1 .btn-yes');
+            const yesRect = yesBtn.getBoundingClientRect();
+            noBtn1.style.left = (yesRect.right + 20) + 'px'; // 20px gap
+            noBtn1.style.top = yesRect.top + 'px';
         }
 
         // Initial position
         setTimeout(positionNoBtn1, 100);
+
+        // Track if button has run away at least once
+        let hasRunAway = false;
 
         // Run away from cursor!
         document.addEventListener('mousemove', function(e) {
@@ -516,13 +519,13 @@
             const distY = e.clientY - btnCenterY;
             const distance = Math.sqrt(distX * distX + distY * distY);
 
-            // If cursor is within 120px, RUN AWAY!
-            if (distance < 120) {
+            // If cursor is within 100px, RUN AWAY!
+            if (distance < 100) {
                 const angle = Math.atan2(distY, distX);
 
                 // Calculate new position (opposite direction from cursor)
-                let newX = rect.left - Math.cos(angle) * 150;
-                let newY = rect.top - Math.sin(angle) * 150;
+                let newX = rect.left - Math.cos(angle) * 180;
+                let newY = rect.top - Math.sin(angle) * 180;
 
                 // Keep within screen bounds
                 const padding = 20;
@@ -532,9 +535,12 @@
                 btn.style.left = newX + 'px';
                 btn.style.top = newY + 'px';
 
-                // Fun text changes
-                const texts = ["Nope!", "Can't catch me!", "Too slow!", "Hehe!", "Try again!", "Nice try!", "Over here!", "Wrong way!", "Not today!"];
-                btn.textContent = texts[Math.floor(Math.random() * texts.length)];
+                // Fun text changes (only after first run)
+                if (hasRunAway) {
+                    const texts = ["Nope!", "Can't catch me!", "Too slow!", "Hehe!", "Try again!", "Nice try!", "Over here!", "Wrong way!", "Not today!"];
+                    btn.textContent = texts[Math.floor(Math.random() * texts.length)];
+                }
+                hasRunAway = true;
             }
         });
 
