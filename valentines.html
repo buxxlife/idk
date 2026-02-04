@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question for You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp 6s ease-in infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Quiz Card */
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(255, 107, 129, 0.3);
+            text-align: center;
+            position: relative;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .quiz-card.hidden {
+            display: none;
+        }
+
+        /* Cat Image */
+        .cat-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff6b81;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #ff6b81;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 107, 129, 0.3);
+        }
+
+        /* Question Text */
+        .question {
+            font-size: 1.3rem;
+            color: #5a5a5a;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #ff6b81;
+            font-weight: 600;
+        }
+
+        /* Buttons Container */
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            min-height: 80px;
+            position: relative;
+        }
+
+        /* Yes Button */
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b81 0%, #ff8e9e 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.3rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 107, 129, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(255, 107, 129, 0.6);
+        }
+
+        /* No Button */
+        .btn-no {
+            background: #e0e0e0;
+            color: #888;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.3rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: absolute;
+        }
+
+        .btn-no.running {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+        }
+
+        /* Success Page */
+        .success-card {
+            background: linear-gradient(135deg, #fff 0%, #ffe8ec 100%);
+            border-radius: 30px;
+            padding: 50px 40px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(255, 107, 129, 0.4);
+            text-align: center;
+            animation: celebrateIn 0.8s ease-out;
+        }
+
+        @keyframes celebrateIn {
+            0% {
+                transform: scale(0) rotate(-10deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .success-card.hidden {
+            display: none;
+        }
+
+        .success-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.8rem;
+            color: #ff6b81;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .success-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 5px solid #ff6b81;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(255, 107, 129, 0.3);
+        }
+
+        .reservation-text {
+            font-size: 1.5rem;
+            color: #5a5a5a;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .reservation-highlight {
+            display: block;
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            color: #ff6b81;
+            margin-top: 15px;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b81 0%, #ff8e9e 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(255, 107, 129, 0.4);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 5px 20px rgba(255, 107, 129, 0.4); }
+            50% { box-shadow: 0 5px 40px rgba(255, 107, 129, 0.8); }
+        }
+
+        .hearts-row {
+            font-size: 2rem;
+            margin: 20px 0;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b81;
+            animation: confetti-fall 3s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Cute decorations */
+        .sparkle {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: twinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.3s; }
+        .sparkle:nth-child(3) { bottom: 30%; left: 5%; animation-delay: 0.6s; }
+        .sparkle:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 0.9s; }
+
+        /* Progress indicator */
+        .step-indicator {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: #ff6b81;
+            transform: scale(1.2);
+        }
+
+        .step-dot.completed {
+            background: #ff6b81;
+        }
+
+        /* Cute message bubble */
+        .message-bubble {
+            background: #fff5f6;
+            border: 2px dashed #ff6b81;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #ff6b81;
+        }
+
+        /* Cat paw prints */
+        .paw-prints {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Sparkles -->
+    <div class="sparkle">&#10022;</div>
+    <div class="sparkle">&#10022;</div>
+    <div class="sparkle">&#10022;</div>
+    <div class="sparkle">&#10022;</div>
+
+    <div class="container">
+        <!-- Question 1 -->
+        <div class="quiz-card" id="question1">
+            <div class="step-indicator">
+                <div class="step-dot active"></div>
+                <div class="step-dot"></div>
+                <div class="step-dot"></div>
+            </div>
+            <img src="https://placekitten.com/400/400" alt="Cute Cat" class="cat-image"
+                 onerror="this.src='https://cataas.com/cat/cute?width=400'">
+            <h1 class="title">Hey You!</h1>
+            <p class="question">
+                I have a <span class="highlight">very important question</span> to ask you...
+                <br><br>
+                Are you ready?
+            </p>
+            <div class="buttons-container">
+                <button class="btn-yes" onclick="nextQuestion(2)">Yes, I'm ready!</button>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-card hidden" id="question2">
+            <div class="step-indicator">
+                <div class="step-dot completed"></div>
+                <div class="step-dot active"></div>
+                <div class="step-dot"></div>
+            </div>
+            <img src="https://placekitten.com/401/401" alt="Cute Cat with Hearts" class="cat-image"
+                 onerror="this.src='https://cataas.com/cat/says/love?width=400'">
+            <h1 class="title">So...</h1>
+            <p class="question">
+                Do you think I'm <span class="highlight">cute</span>?
+                <br>
+                (Be honest!)
+            </p>
+            <div class="message-bubble">
+                Psst... there's only one correct answer here
+            </div>
+            <div class="buttons-container" id="btnContainer2">
+                <button class="btn-yes" onclick="nextQuestion(3)">Yes, very cute!</button>
+                <button class="btn-no" id="noBtn2" onmouseover="runAway(this, 'btnContainer2')" onclick="runAway(this, 'btnContainer2')">Hmm, not really</button>
+            </div>
+        </div>
+
+        <!-- Question 3 - The Big Question -->
+        <div class="quiz-card hidden" id="question3">
+            <div class="step-indicator">
+                <div class="step-dot completed"></div>
+                <div class="step-dot completed"></div>
+                <div class="step-dot active"></div>
+            </div>
+            <img src="https://placekitten.com/402/402" alt="Adorable Cat" class="cat-image"
+                 onerror="this.src='https://cataas.com/cat/gif?width=400'">
+            <h1 class="title">The Big Question</h1>
+            <div class="hearts-row">&#128149; &#128149; &#128149;</div>
+            <p class="question">
+                Will you be my <span class="highlight">Valentine</span>?
+                <br><br>
+                Go on a date with me on <span class="highlight">February 14th</span>?
+            </p>
+            <div class="buttons-container" id="btnContainer3">
+                <button class="btn-yes" onclick="showSuccess()">YES! &#128149;</button>
+                <button class="btn-no" id="noBtn3" onmouseover="runAway(this, 'btnContainer3')" onclick="runAway(this, 'btnContainer3')">No thanks</button>
+            </div>
+        </div>
+
+        <!-- Success Page -->
+        <div class="success-card hidden" id="successPage">
+            <h1 class="success-title">Yay!!! &#127881;</h1>
+            <div class="hearts-row">&#128149; &#128149; &#128149; &#128149; &#128149;</div>
+            <img src="https://placekitten.com/500/500" alt="Happy Cats" class="success-image"
+                 onerror="this.src='https://cataas.com/cat/says/I%20Love%20You?width=500'">
+            <p class="reservation-text">
+                Congratulations!
+                <span class="reservation-highlight">You have made a reservation in my heart</span>
+            </p>
+            <div class="date-badge">
+                &#128197; February 14th &#128149;
+            </div>
+            <div class="hearts-row" style="margin-top: 30px;">
+                &#128571; &#128149; &#128571;
+            </div>
+            <p style="margin-top: 20px; color: #888; font-size: 1rem;">
+                I can't wait to spend Valentine's Day with you!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['&#128149;', '&#128151;', '&#128152;', '&#128153;', '&#128154;', '&#128155;', '&#128156;', '&#128157;', '&#128158;', '&#10084;', '&#129505;'];
+
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion(questionNum) {
+            // Hide all questions
+            document.querySelectorAll('.quiz-card').forEach(card => {
+                card.classList.add('hidden');
+            });
+
+            // Show target question
+            const targetQuestion = document.getElementById('question' + questionNum);
+            targetQuestion.classList.remove('hidden');
+        }
+
+        // Make the No button run away
+        function runAway(btn, containerId) {
+            const container = document.getElementById(containerId);
+            const containerRect = container.getBoundingClientRect();
+
+            // Get random position within container bounds
+            const maxX = containerRect.width - btn.offsetWidth - 20;
+            const maxY = 100;
+
+            const randomX = Math.random() * maxX - maxX/2;
+            const randomY = Math.random() * maxY - maxY/2;
+
+            // Apply new position
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            // Add shake animation
+            btn.classList.add('running');
+            setTimeout(() => btn.classList.remove('running'), 500);
+
+            // Change button text after a few attempts
+            const texts = [
+                "Can't catch me!",
+                "Nope!",
+                "Try again!",
+                "Not here!",
+                "Hehe!",
+                "Nice try!",
+                "Just say yes!",
+                "Please?",
+                "Come on!"
+            ];
+            btn.textContent = texts[Math.floor(Math.random() * texts.length)];
+        }
+
+        // Show success page with confetti
+        function showSuccess() {
+            // Hide question
+            document.getElementById('question3').classList.add('hidden');
+
+            // Show success page
+            document.getElementById('successPage').classList.remove('hidden');
+
+            // Create confetti
+            createConfetti();
+
+            // Play celebration (more hearts)
+            celebrateHearts();
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff6b81', '#ff8e9e', '#ffecd2', '#fcb69f', '#fff', '#ff69b4', '#ff1493'];
+
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    document.body.appendChild(confetti);
+
+                    // Remove after animation
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Add extra hearts for celebration
+        function celebrateHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['&#128149;', '&#128151;', '&#128152;'];
+
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.animationDuration = '4s';
+                    container.appendChild(heart);
+                }, i * 100);
+            }
+        }
+
+        // Initialize
+        createFloatingHearts();
+    </script>
+</body>
+</html>
