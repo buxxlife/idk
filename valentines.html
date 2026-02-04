@@ -364,24 +364,38 @@
 <body>
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <div class="sparkle">&#10022;</div>
-    <div class="sparkle">&#10022;</div>
-    <div class="sparkle">&#10022;</div>
-    <div class="sparkle">&#10022;</div>
+    <div class="sparkle">✦</div>
+    <div class="sparkle">✦</div>
+    <div class="sparkle">✦</div>
+    <div class="sparkle">✦</div>
 
-    <!-- Q1 No button - escapes cursor, text stays "No" -->
-    <button class="btn-no" id="noBtn1">No</button>
+    <!-- Q1 No button - escapes cursor (starts hidden) -->
+    <button class="btn-no" id="noBtn1" style="display: none;">No</button>
 
     <div class="container">
+        <!-- INTRO: Hey Ashley, are you ready? (No "No" button here) -->
+        <div class="quiz-card" id="intro">
+            <img src="https://cataas.com/cat/cute?width=300&height=300" alt="Cute cat" class="cute-image">
+            <h1 class="title">Hey Ashley!</h1>
+            <p class="question">
+                I have a <span class="highlight">very important question</span> to ask you...
+                <br><br>
+                Are you ready?
+            </p>
+            <div class="buttons-container">
+                <button class="btn-yes" onclick="nextQuestion(1)">Yes, I'm ready!</button>
+            </div>
+        </div>
+
         <!-- QUESTION 1: Do you think I am cute? - No escapes -->
-        <div class="quiz-card" id="question1">
+        <div class="quiz-card hidden" id="question1">
             <div class="step-indicator">
                 <div class="step-dot active"></div>
                 <div class="step-dot"></div>
                 <div class="step-dot"></div>
             </div>
-            <img src="https://i.imgflip.com/4t0m5.jpg" alt="Cute pleading" class="cute-image">
-            <h1 class="title">Hey Ashley!</h1>
+            <img src="https://cataas.com/cat/says/please?width=300&height=300" alt="Pleading cat" class="cute-image">
+            <h1 class="title">Question 1</h1>
             <p class="question">
                 Do you think I'm <span class="highlight">cute</span>?
             </p>
@@ -397,13 +411,13 @@
                 <div class="step-dot active"></div>
                 <div class="step-dot"></div>
             </div>
-            <img src="https://i.imgur.com/oYZpZaL.png" alt="Cat with open arms" class="cute-image">
-            <h1 class="title">Okay next...</h1>
+            <img src="https://cataas.com/cat/cute?width=300&height=300&t=2" alt="Cat with love" class="cute-image">
+            <h1 class="title">Question 2</h1>
             <p class="question">
                 Do you love me <span class="highlight">at least this much</span>?
             </p>
             <div class="message-bubble">
-                (Look at the picture above!)
+                🐱 ← This much! (with arms wide open)
             </div>
             <div class="buttons-container" id="btnContainer2">
                 <button class="btn-yes" id="yesBtn2" onclick="nextQuestion(3)">Yes, even more!</button>
@@ -411,47 +425,47 @@
             </div>
         </div>
 
-        <!-- QUESTION 3: Valentine question - No hides behind Yes, dodges when clicked -->
+        <!-- QUESTION 3: Valentine question - No hides behind Yes -->
         <div class="quiz-card hidden" id="question3">
             <div class="step-indicator">
                 <div class="step-dot completed"></div>
                 <div class="step-dot completed"></div>
                 <div class="step-dot active"></div>
             </div>
-            <img src="https://i.imgur.com/K63wcvD.jpeg" alt="Cute cat" class="cute-image">
+            <img src="https://cataas.com/cat/cute?width=300&height=300&t=3" alt="Cute cat" class="cute-image">
             <h1 class="title">The Big Question</h1>
-            <div class="hearts-row">&#128149; &#128149; &#128149;</div>
+            <div class="hearts-row">💕 💕 💕</div>
             <p class="question">
                 Will you be my <span class="highlight">Valentine</span>?
                 <br><br>
                 Go on a date with me on <span class="highlight">February 14th</span>?
             </p>
             <div class="buttons-container" id="btnContainer3">
-                <button class="btn-yes" id="yesBtn3" onclick="showSuccess()">YES! &#128149;</button>
+                <button class="btn-yes" id="yesBtn3" onclick="showSuccess()">YES! 💕</button>
                 <button class="btn-no" id="noBtn3">No thanks</button>
             </div>
         </div>
 
         <!-- Success Page -->
         <div class="success-card hidden" id="successPage">
-            <h1 class="success-title">Yay Ashley!!! &#127881;</h1>
-            <div class="hearts-row">&#128149; &#128149; &#128149; &#128149; &#128149;</div>
-            <img src="https://i.imgur.com/7GXBMGL.jpeg" alt="Happy cat" class="success-image">
+            <h1 class="success-title">Yay Ashley!!! 🎉</h1>
+            <div class="hearts-row">💕 💕 💕 💕 💕</div>
+            <img src="https://cataas.com/cat/cute?width=300&height=300&t=4" alt="Happy cat" class="success-image">
             <p class="reservation-text">
                 Congratulations Ashley!
                 <span class="reservation-highlight">You have made a reservation in my heart</span>
             </p>
             <div class="date-badge">
-                &#128197; February 14th &#128149;
+                📅 February 14th 💕
             </div>
             <div class="hearts-row" style="margin-top: 20px;">
-                &#128571; &#128149; &#128571;
+                😻 💕 😻
             </div>
             <p style="margin-top: 15px; color: #888; font-size: 1rem;">
                 I can't wait to spend Valentine's Day with you!
             </p>
             <a href="#" id="calendarBtn" class="btn-calendar" onclick="addToCalendar()">
-                &#128197; Add to Google Calendar
+                📅 Add to Google Calendar
             </a>
         </div>
     </div>
@@ -461,7 +475,7 @@
         // QUESTION 1: No button escapes cursor (text stays "No")
         // ============================================
         const noBtn1 = document.getElementById('noBtn1');
-        let btn1Visible = true;
+        let btn1Visible = false;
 
         function positionNoBtn1() {
             const card = document.getElementById('question1');
@@ -478,8 +492,6 @@
             noBtn1.style.left = (yesRect.right + 30) + 'px';
             noBtn1.style.top = yesRect.top + 'px';
         }
-
-        setTimeout(positionNoBtn1, 100);
 
         // No button runs away - text stays "No"
         document.addEventListener('mousemove', function(e) {
@@ -515,54 +527,43 @@
         function clickedNo2() {
             const noBtn = document.getElementById('noBtn2');
             noBtn.classList.add('transformed');
-            noBtn.innerHTML = "Yes! &#128149;";
+            noBtn.innerHTML = "Yes! 💕";
             noBtn.onclick = function() {
                 nextQuestion(3);
             };
         }
 
         // ============================================
-        // QUESTION 3: No button hides behind Yes, dodges when exposed parts clicked
+        // QUESTION 3: No button hides behind Yes, dodges when clicked
         // ============================================
         const noBtn3 = document.getElementById('noBtn3');
         const yesBtn3 = document.getElementById('yesBtn3');
-        let noBtn3Hiding = false;
 
-        // Position No button behind Yes initially when Q3 loads
         function setupQ3Buttons() {
-            const yesRect = yesBtn3.getBoundingClientRect();
-            const container = document.getElementById('btnContainer3');
-            const containerRect = container.getBoundingClientRect();
-
-            // Position No behind Yes (centered, but bigger so parts stick out)
             noBtn3.style.position = 'absolute';
             noBtn3.style.left = '50%';
             noBtn3.style.transform = 'translateX(-50%)';
             noBtn3.style.top = '0px';
             noBtn3.style.zIndex = '5';
-            noBtn3Hiding = true;
         }
 
         // No button dodges using Yes as shield
         noBtn3.addEventListener('click', function(e) {
             e.preventDefault();
-            // Dodge to the other side of Yes button
-            const currentLeft = noBtn3.style.left;
-            if (currentLeft.includes('-')) {
-                noBtn3.style.left = 'calc(50% + 30px)';
+            const currentTransform = noBtn3.style.transform;
+            if (currentTransform.includes('-150')) {
+                noBtn3.style.transform = 'translateX(50%)';
             } else {
-                noBtn3.style.left = 'calc(50% - 30px)';
+                noBtn3.style.transform = 'translateX(-150%)';
             }
-            noBtn3.style.transform = 'translateX(-50%)';
         });
 
-        // Also dodge on hover
         noBtn3.addEventListener('mouseenter', function() {
             const currentTransform = noBtn3.style.transform;
-            if (currentTransform.includes('-60')) {
-                noBtn3.style.transform = 'translateX(60%)';
+            if (currentTransform.includes('-150')) {
+                noBtn3.style.transform = 'translateX(50%)';
             } else {
-                noBtn3.style.transform = 'translateX(-160%)';
+                noBtn3.style.transform = 'translateX(-150%)';
             }
         });
 
@@ -570,16 +571,20 @@
         // Navigation
         // ============================================
         function nextQuestion(num) {
+            // Hide intro and all questions
+            document.getElementById('intro').classList.add('hidden');
             document.querySelectorAll('.quiz-card').forEach(card => {
                 card.classList.add('hidden');
             });
 
-            if (num !== 1) {
+            document.getElementById('question' + num).classList.remove('hidden');
+
+            if (num === 1) {
+                setTimeout(positionNoBtn1, 100);
+            } else {
                 noBtn1.style.display = 'none';
                 btn1Visible = false;
             }
-
-            document.getElementById('question' + num).classList.remove('hidden');
 
             if (num === 3) {
                 setTimeout(setupQ3Buttons, 100);
@@ -592,6 +597,7 @@
             });
             document.getElementById('successPage').classList.remove('hidden');
             noBtn1.style.display = 'none';
+            btn1Visible = false;
             createConfetti();
             celebrateHearts();
         }
