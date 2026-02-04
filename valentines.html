@@ -154,8 +154,12 @@
             transition: all 0.1s ease;
         }
 
-        /* Q1 No button - escapes cursor */
+        /* Q1 No button - escapes on hover */
         #noBtn1 {
+            transition: all 0.15s ease;
+        }
+
+        #noBtn1.escaping {
             position: fixed;
             z-index: 9999;
         }
@@ -369,9 +373,6 @@
     <div class="sparkle">✦</div>
     <div class="sparkle">✦</div>
 
-    <!-- Q1 No button - escapes cursor (starts hidden) -->
-    <button class="btn-no" id="noBtn1" style="display: none;">No</button>
-
     <div class="container">
         <!-- INTRO: Hey Ashley, are you ready? (No "No" button here) -->
         <div class="quiz-card" id="intro">
@@ -401,23 +402,24 @@
             </p>
             <div class="buttons-container" id="btnContainer1">
                 <button class="btn-yes" onclick="nextQuestion(2)">Yes!</button>
+                <button class="btn-no" id="noBtn1">No</button>
             </div>
         </div>
 
-        <!-- QUESTION 2: Do you love me at least this much? - No transforms to Yes -->
+        <!-- QUESTION 2: Do you love me? - No transforms to Yes -->
         <div class="quiz-card hidden" id="question2">
             <div class="step-indicator">
                 <div class="step-dot completed"></div>
                 <div class="step-dot active"></div>
                 <div class="step-dot"></div>
             </div>
-            <img src="https://i.pinimg.com/originals/8a/e9/e9/8ae9e9a4e05be3da7f66e71be5866e28.gif" alt="This much love" class="cute-image">
+            <img src="https://cataas.com/cat/cute?width=300&height=300&t=5" alt="Cute cat" class="cute-image">
             <h1 class="title">Question 2</h1>
             <p class="question">
-                Do you love me <span class="highlight">at least this much</span>?
+                Do you <span class="highlight">love</span> me?
             </p>
             <div class="buttons-container" id="btnContainer2">
-                <button class="btn-yes" id="yesBtn2" onclick="nextQuestion(3)">Yes, even more!</button>
+                <button class="btn-yes" id="yesBtn2" onclick="nextQuestion(3)">Yes!</button>
                 <button class="btn-no" id="noBtn2" onclick="clickedNo2()">No</button>
             </div>
         </div>
@@ -469,53 +471,27 @@
 
     <script>
         // ============================================
-        // QUESTION 1: No button escapes cursor (text stays "No")
+        // QUESTION 1: No button escapes ONLY when mouse lands on it
         // ============================================
         const noBtn1 = document.getElementById('noBtn1');
-        let btn1Visible = false;
 
-        function positionNoBtn1() {
-            const card = document.getElementById('question1');
-            if (card.classList.contains('hidden')) {
-                noBtn1.style.display = 'none';
-                btn1Visible = false;
-                return;
-            }
-            noBtn1.style.display = 'block';
-            btn1Visible = true;
-
-            const yesBtn = document.querySelector('#btnContainer1 .btn-yes');
-            const yesRect = yesBtn.getBoundingClientRect();
-            noBtn1.style.left = (yesRect.right + 30) + 'px';
-            noBtn1.style.top = yesRect.top + 'px';
-        }
-
-        // No button runs away - text stays "No"
-        document.addEventListener('mousemove', function(e) {
-            if (!btn1Visible) return;
-
+        // Escape function - moves to random position when hovered
+        noBtn1.addEventListener('mouseenter', function() {
             const btn = noBtn1;
+
+            // Make it fixed position so it can move anywhere
+            btn.classList.add('escaping');
+
+            // Get current position
             const rect = btn.getBoundingClientRect();
-            const btnCenterX = rect.left + rect.width / 2;
-            const btnCenterY = rect.top + rect.height / 2;
 
-            const distX = e.clientX - btnCenterX;
-            const distY = e.clientY - btnCenterY;
-            const distance = Math.sqrt(distX * distX + distY * distY);
+            // Move to a random position on screen
+            const padding = 50;
+            let newX = Math.random() * (window.innerWidth - rect.width - padding * 2) + padding;
+            let newY = Math.random() * (window.innerHeight - rect.height - padding * 2) + padding;
 
-            if (distance < 100) {
-                const angle = Math.atan2(distY, distX);
-                let newX = rect.left - Math.cos(angle) * 180;
-                let newY = rect.top - Math.sin(angle) * 180;
-
-                const padding = 20;
-                newX = Math.max(padding, Math.min(window.innerWidth - rect.width - padding, newX));
-                newY = Math.max(padding, Math.min(window.innerHeight - rect.height - padding, newY));
-
-                btn.style.left = newX + 'px';
-                btn.style.top = newY + 'px';
-                // Text stays "No" - no changes!
-            }
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
         });
 
         // ============================================
@@ -576,11 +552,11 @@
 
             document.getElementById('question' + num).classList.remove('hidden');
 
+            // Reset No button if going back to Q1
             if (num === 1) {
-                setTimeout(positionNoBtn1, 100);
-            } else {
-                noBtn1.style.display = 'none';
-                btn1Visible = false;
+                noBtn1.classList.remove('escaping');
+                noBtn1.style.left = '';
+                noBtn1.style.top = '';
             }
 
             if (num === 3) {
@@ -593,8 +569,6 @@
                 card.classList.add('hidden');
             });
             document.getElementById('successPage').classList.remove('hidden');
-            noBtn1.style.display = 'none';
-            btn1Visible = false;
             createConfetti();
             celebrateHearts();
         }
