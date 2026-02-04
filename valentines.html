@@ -21,7 +21,6 @@
             position: relative;
         }
 
-        /* Floating Hearts Animation */
         .hearts-container {
             position: fixed;
             top: 0;
@@ -41,23 +40,12 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100px) rotate(720deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
         }
 
-        /* Main Container */
         .container {
             min-height: 100vh;
             display: flex;
@@ -69,7 +57,6 @@
             z-index: 1;
         }
 
-        /* Quiz Card */
         .quiz-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
@@ -83,22 +70,13 @@
         }
 
         @keyframes popIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .quiz-card.hidden {
-            display: none;
-        }
+        .quiz-card.hidden { display: none; }
 
-        /* Photo styling */
-        .couple-image {
+        .cute-image {
             width: 250px;
             height: 250px;
             border-radius: 20px;
@@ -114,7 +92,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* Title */
         .title {
             font-family: 'Pacifico', cursive;
             font-size: 2.5rem;
@@ -123,7 +100,6 @@
             text-shadow: 2px 2px 4px rgba(255, 107, 129, 0.3);
         }
 
-        /* Question Text */
         .question {
             font-size: 1.3rem;
             color: #5a5a5a;
@@ -136,7 +112,6 @@
             font-weight: 600;
         }
 
-        /* Buttons Container */
         .buttons-container {
             display: flex;
             gap: 30px;
@@ -147,7 +122,6 @@
             align-items: center;
         }
 
-        /* Yes Button */
         .btn-yes {
             background: linear-gradient(135deg, #ff6b81 0%, #ff8e9e 100%);
             color: white;
@@ -167,7 +141,6 @@
             box-shadow: 0 8px 30px rgba(255, 107, 129, 0.6);
         }
 
-        /* No Button */
         .btn-no {
             background: #e0e0e0;
             color: #888;
@@ -181,15 +154,16 @@
             transition: all 0.1s ease;
         }
 
-        /* Running away button */
+        /* Q1 No button - escapes cursor */
         #noBtn1 {
             position: fixed;
             z-index: 9999;
         }
 
-        /* Q3 buttons container - relative for absolute positioning */
+        /* Q3 buttons */
         #btnContainer3 {
             position: relative;
+            min-height: 80px;
         }
 
         #yesBtn3 {
@@ -198,18 +172,13 @@
         }
 
         #noBtn3 {
-            transition: all 0.5s ease;
-        }
-
-        #noBtn3.hidden-behind {
+            padding: 18px 60px;
+            font-size: 1.4rem;
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-            opacity: 0.3;
+            z-index: 5;
+            transition: all 0.2s ease;
         }
 
-        /* No button that transforms */
         .btn-no.transformed {
             background: linear-gradient(135deg, #ff6b81 0%, #ff8e9e 100%) !important;
             color: white !important;
@@ -223,7 +192,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Success Page */
         .success-card {
             background: linear-gradient(135deg, #fff 0%, #ffe8ec 100%);
             border-radius: 30px;
@@ -236,22 +204,12 @@
         }
 
         @keyframes celebrateIn {
-            0% {
-                transform: scale(0) rotate(-10deg);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1) rotate(5deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
-        .success-card.hidden {
-            display: none;
-        }
+        .success-card.hidden { display: none; }
 
         .success-title {
             font-family: 'Pacifico', cursive;
@@ -320,7 +278,6 @@
             50% { transform: scale(1.2); }
         }
 
-        /* Confetti */
         .confetti {
             position: fixed;
             width: 10px;
@@ -331,17 +288,10 @@
         }
 
         @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
 
-        /* Sparkles */
         .sparkle {
             position: absolute;
             font-size: 1.5rem;
@@ -358,7 +308,6 @@
         .sparkle:nth-child(3) { bottom: 30%; left: 5%; animation-delay: 0.6s; }
         .sparkle:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 0.9s; }
 
-        /* Progress indicator */
         .step-indicator {
             display: flex;
             gap: 10px;
@@ -374,16 +323,9 @@
             transition: all 0.3s ease;
         }
 
-        .step-dot.active {
-            background: #ff6b81;
-            transform: scale(1.2);
-        }
+        .step-dot.active { background: #ff6b81; transform: scale(1.2); }
+        .step-dot.completed { background: #ff6b81; }
 
-        .step-dot.completed {
-            background: #ff6b81;
-        }
-
-        /* Message bubble */
         .message-bubble {
             background: #fff5f6;
             border: 2px dashed #ff6b81;
@@ -394,7 +336,6 @@
             color: #ff6b81;
         }
 
-        /* Calendar button */
         .btn-calendar {
             display: inline-flex;
             align-items: center;
@@ -421,69 +362,63 @@
     </style>
 </head>
 <body>
-    <!-- Floating Hearts Background -->
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- Sparkles -->
     <div class="sparkle">&#10022;</div>
     <div class="sparkle">&#10022;</div>
     <div class="sparkle">&#10022;</div>
     <div class="sparkle">&#10022;</div>
 
-    <!-- QUESTION 1: No button RUNS AWAY from cursor -->
+    <!-- Q1 No button - escapes cursor, text stays "No" -->
     <button class="btn-no" id="noBtn1">No</button>
 
     <div class="container">
+        <!-- QUESTION 1: Do you think I am cute? - No escapes -->
         <div class="quiz-card" id="question1">
             <div class="step-indicator">
                 <div class="step-dot active"></div>
                 <div class="step-dot"></div>
                 <div class="step-dot"></div>
             </div>
-            <img src="images/photo1.jpg" alt="Us" class="couple-image">
+            <img src="https://i.imgflip.com/4t0m5.jpg" alt="Cute pleading" class="cute-image">
             <h1 class="title">Hey Ashley!</h1>
             <p class="question">
-                I have a <span class="highlight">very important question</span> to ask you...
-                <br><br>
-                Are you ready?
+                Do you think I'm <span class="highlight">cute</span>?
             </p>
             <div class="buttons-container" id="btnContainer1">
-                <button class="btn-yes" onclick="nextQuestion(2)">Yes, I'm ready!</button>
-                <!-- No button is outside, it runs away! -->
+                <button class="btn-yes" onclick="nextQuestion(2)">Yes!</button>
             </div>
         </div>
 
-        <!-- QUESTION 2: Clicking No auto-clicks Yes -->
+        <!-- QUESTION 2: Do you love me at least this much? - No transforms to Yes -->
         <div class="quiz-card hidden" id="question2">
             <div class="step-indicator">
                 <div class="step-dot completed"></div>
                 <div class="step-dot active"></div>
                 <div class="step-dot"></div>
             </div>
-            <img src="images/photo2.jpg" alt="Our moments" class="couple-image">
-            <h1 class="title">So...</h1>
+            <img src="https://i.imgur.com/oYZpZaL.png" alt="Cat with open arms" class="cute-image">
+            <h1 class="title">Okay next...</h1>
             <p class="question">
-                Do you think I'm <span class="highlight">cute</span>?
-                <br>
-                (Be honest!)
+                Do you love me <span class="highlight">at least this much</span>?
             </p>
             <div class="message-bubble">
-                Psst... there's only one correct answer here
+                (Look at the picture above!)
             </div>
             <div class="buttons-container" id="btnContainer2">
-                <button class="btn-yes" id="yesBtn2" onclick="nextQuestion(3)">Yes, very cute!</button>
-                <button class="btn-no" id="noBtn2" onclick="clickedNo2()">Hmm, not really</button>
+                <button class="btn-yes" id="yesBtn2" onclick="nextQuestion(3)">Yes, even more!</button>
+                <button class="btn-no" id="noBtn2" onclick="clickedNo2()">No</button>
             </div>
         </div>
 
-        <!-- QUESTION 3: No button transforms into Yes -->
+        <!-- QUESTION 3: Valentine question - No hides behind Yes, dodges when clicked -->
         <div class="quiz-card hidden" id="question3">
             <div class="step-indicator">
                 <div class="step-dot completed"></div>
                 <div class="step-dot completed"></div>
                 <div class="step-dot active"></div>
             </div>
-            <img src="images/photo3.jpg" alt="Together" class="couple-image">
+            <img src="https://i.imgur.com/K63wcvD.jpeg" alt="Cute cat" class="cute-image">
             <h1 class="title">The Big Question</h1>
             <div class="hearts-row">&#128149; &#128149; &#128149;</div>
             <p class="question">
@@ -493,7 +428,7 @@
             </p>
             <div class="buttons-container" id="btnContainer3">
                 <button class="btn-yes" id="yesBtn3" onclick="showSuccess()">YES! &#128149;</button>
-                <button class="btn-no" id="noBtn3" onclick="transformNoToYes()">No thanks</button>
+                <button class="btn-no" id="noBtn3">No thanks</button>
             </div>
         </div>
 
@@ -501,7 +436,7 @@
         <div class="success-card hidden" id="successPage">
             <h1 class="success-title">Yay Ashley!!! &#127881;</h1>
             <div class="hearts-row">&#128149; &#128149; &#128149; &#128149; &#128149;</div>
-            <img src="images/photo4.jpg" alt="Us together" class="success-image">
+            <img src="https://i.imgur.com/7GXBMGL.jpeg" alt="Happy cat" class="success-image">
             <p class="reservation-text">
                 Congratulations Ashley!
                 <span class="reservation-highlight">You have made a reservation in my heart</span>
@@ -523,12 +458,11 @@
 
     <script>
         // ============================================
-        // QUESTION 1: No button runs away from cursor
+        // QUESTION 1: No button escapes cursor (text stays "No")
         // ============================================
         const noBtn1 = document.getElementById('noBtn1');
         let btn1Visible = true;
 
-        // Position the button initially beside the Yes button
         function positionNoBtn1() {
             const card = document.getElementById('question1');
             if (card.classList.contains('hidden')) {
@@ -539,20 +473,15 @@
             noBtn1.style.display = 'block';
             btn1Visible = true;
 
-            // Position right next to the Yes button
             const yesBtn = document.querySelector('#btnContainer1 .btn-yes');
             const yesRect = yesBtn.getBoundingClientRect();
-            noBtn1.style.left = (yesRect.right + 20) + 'px'; // 20px gap
+            noBtn1.style.left = (yesRect.right + 30) + 'px';
             noBtn1.style.top = yesRect.top + 'px';
         }
 
-        // Initial position
         setTimeout(positionNoBtn1, 100);
 
-        // Track if button has run away at least once
-        let hasRunAway = false;
-
-        // Run away from cursor!
+        // No button runs away - text stays "No"
         document.addEventListener('mousemove', function(e) {
             if (!btn1Visible) return;
 
@@ -565,76 +494,96 @@
             const distY = e.clientY - btnCenterY;
             const distance = Math.sqrt(distX * distX + distY * distY);
 
-            // If cursor is within 100px, RUN AWAY!
             if (distance < 100) {
                 const angle = Math.atan2(distY, distX);
-
-                // Calculate new position (opposite direction from cursor)
                 let newX = rect.left - Math.cos(angle) * 180;
                 let newY = rect.top - Math.sin(angle) * 180;
 
-                // Keep within screen bounds
                 const padding = 20;
                 newX = Math.max(padding, Math.min(window.innerWidth - rect.width - padding, newX));
                 newY = Math.max(padding, Math.min(window.innerHeight - rect.height - padding, newY));
 
                 btn.style.left = newX + 'px';
                 btn.style.top = newY + 'px';
-
-                // Fun text changes (only after first run)
-                if (hasRunAway) {
-                    const texts = ["Nope!", "Can't catch me!", "Too slow!", "Hehe!", "Try again!", "Nice try!", "Over here!", "Wrong way!", "Not today!"];
-                    btn.textContent = texts[Math.floor(Math.random() * texts.length)];
-                }
-                hasRunAway = true;
+                // Text stays "No" - no changes!
             }
         });
 
         // ============================================
-        // QUESTION 2: Click No -> Transforms to Yes
+        // QUESTION 2: No transforms to Yes
         // ============================================
         function clickedNo2() {
             const noBtn = document.getElementById('noBtn2');
-
-            // Transform into Yes button
             noBtn.classList.add('transformed');
             noBtn.innerHTML = "Yes! &#128149;";
-
-            // Second click goes to next question
             noBtn.onclick = function() {
                 nextQuestion(3);
             };
         }
 
         // ============================================
-        // QUESTION 3: No hides behind Yes button
+        // QUESTION 3: No button hides behind Yes, dodges when exposed parts clicked
         // ============================================
-        function transformNoToYes() {
-            const noBtn = document.getElementById('noBtn3');
+        const noBtn3 = document.getElementById('noBtn3');
+        const yesBtn3 = document.getElementById('yesBtn3');
+        let noBtn3Hiding = false;
 
-            // Hide behind the Yes button!
-            noBtn.classList.add('hidden-behind');
-            noBtn.textContent = "I'm hiding!";
-            noBtn.disabled = true;
+        // Position No button behind Yes initially when Q3 loads
+        function setupQ3Buttons() {
+            const yesRect = yesBtn3.getBoundingClientRect();
+            const container = document.getElementById('btnContainer3');
+            const containerRect = container.getBoundingClientRect();
+
+            // Position No behind Yes (centered, but bigger so parts stick out)
+            noBtn3.style.position = 'absolute';
+            noBtn3.style.left = '50%';
+            noBtn3.style.transform = 'translateX(-50%)';
+            noBtn3.style.top = '0px';
+            noBtn3.style.zIndex = '5';
+            noBtn3Hiding = true;
         }
+
+        // No button dodges using Yes as shield
+        noBtn3.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Dodge to the other side of Yes button
+            const currentLeft = noBtn3.style.left;
+            if (currentLeft.includes('-')) {
+                noBtn3.style.left = 'calc(50% + 30px)';
+            } else {
+                noBtn3.style.left = 'calc(50% - 30px)';
+            }
+            noBtn3.style.transform = 'translateX(-50%)';
+        });
+
+        // Also dodge on hover
+        noBtn3.addEventListener('mouseenter', function() {
+            const currentTransform = noBtn3.style.transform;
+            if (currentTransform.includes('-60')) {
+                noBtn3.style.transform = 'translateX(60%)';
+            } else {
+                noBtn3.style.transform = 'translateX(-160%)';
+            }
+        });
 
         // ============================================
         // Navigation
         // ============================================
         function nextQuestion(num) {
-            // Hide all cards
             document.querySelectorAll('.quiz-card').forEach(card => {
                 card.classList.add('hidden');
             });
 
-            // Hide Q1 no button
             if (num !== 1) {
                 noBtn1.style.display = 'none';
                 btn1Visible = false;
             }
 
-            // Show target
             document.getElementById('question' + num).classList.remove('hidden');
+
+            if (num === 3) {
+                setTimeout(setupQ3Buttons, 100);
+            }
         }
 
         function showSuccess() {
@@ -701,23 +650,20 @@
         }
 
         // ============================================
-        // Google Calendar
+        // Google Calendar - Feb 14, 2026
         // ============================================
         function addToCalendar() {
-            // Valentine's Day 2025 date details
             const event = {
                 title: "Valentine's Day Date with Ashley ❤️",
-                date: "20250214", // February 14, 2025
-                startTime: "180000", // 6:00 PM
-                endTime: "220000", // 10:00 PM
+                date: "20260214",
+                startTime: "180000",
+                endTime: "220000",
                 description: "Our special Valentine's Day date! 💕",
-                location: "" // Add location if you want
+                location: ""
             };
 
-            // Google Calendar URL format
             const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.date}T${event.startTime}/${event.date}T${event.endTime}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
 
-            // Open in new tab
             window.open(googleCalendarUrl, '_blank');
         }
 
