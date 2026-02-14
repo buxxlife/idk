@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations Ashley!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif;
+        }
+
+        .message-container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .congratulations {
+            font-size: 5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #ff6b6b);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            text-shadow: none;
+            filter: drop-shadow(0 0 30px rgba(255, 217, 61, 0.3));
+            margin-bottom: 20px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .name {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #ffd93d;
+            text-shadow: 0 0 20px rgba(255, 217, 61, 0.5), 0 0 40px rgba(255, 217, 61, 0.3), 0 0 60px rgba(255, 217, 61, 0.1);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 217, 61, 0.5), 0 0 40px rgba(255, 217, 61, 0.3); }
+            to { text-shadow: 0 0 30px rgba(255, 217, 61, 0.8), 0 0 60px rgba(255, 217, 61, 0.5), 0 0 80px rgba(255, 217, 61, 0.3); }
+        }
+
+        .subtitle {
+            font-size: 2.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .trophy {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 15px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .stars {
+            font-size: 2rem;
+            display: block;
+            margin-top: 15px;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="message-container">
+        <span class="trophy">&#127942;</span>
+        <div class="congratulations">CONGRATULATIONS</div>
+        <div class="name">Ashley</div>
+        <div class="subtitle">You Win the Drawing Contest!!!!!</div>
+        <span class="stars">&#10024; &#127775; &#10024; &#127775; &#10024;</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const confettiColors = [
+            '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff',
+            '#ff9ff3', '#feca57', '#ff6348', '#7bed9f',
+            '#70a1ff', '#5352ed', '#ff4757', '#2ed573',
+            '#1e90ff', '#ff6b81', '#a29bfe', '#fd79a8',
+            '#e17055', '#00cec9', '#fab1a0', '#81ecec'
+        ];
+
+        const confettiShapes = ['rect', 'circle', 'triangle', 'star', 'streamer'];
+
+        class ConfettiPiece {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * -canvas.height;
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 10 + 5;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.shape = confettiShapes[Math.floor(Math.random() * confettiShapes.length)];
+                this.speedY = Math.random() * 3 + 2;
+                this.speedX = Math.random() * 4 - 2;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+                this.oscillationSpeed = Math.random() * 0.05 + 0.01;
+                this.oscillationDistance = Math.random() * 40 + 10;
+                this.time = Math.random() * 100;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            }
+
+            update() {
+                this.time += this.oscillationSpeed;
+                this.y += this.speedY;
+                this.x += Math.sin(this.time) * 1.5 + this.speedX * 0.3;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > canvas.height + 20) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+
+                switch (this.shape) {
+                    case 'rect':
+                        ctx.fillRect(-this.size / 2, -this.size / 4, this.size, this.size / 2);
+                        break;
+                    case 'circle':
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                        break;
+                    case 'triangle':
+                        ctx.beginPath();
+                        ctx.moveTo(0, -this.size / 2);
+                        ctx.lineTo(-this.size / 2, this.size / 2);
+                        ctx.lineTo(this.size / 2, this.size / 2);
+                        ctx.closePath();
+                        ctx.fill();
+                        break;
+                    case 'star':
+                        this.drawStar(0, 0, 5, this.size / 2, this.size / 4);
+                        break;
+                    case 'streamer':
+                        ctx.fillRect(-this.size / 6, -this.size, this.size / 3, this.size * 2);
+                        break;
+                }
+
+                ctx.restore();
+            }
+
+            drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+                let rot = (Math.PI / 2) * 3;
+                let step = Math.PI / spikes;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy - outerRadius);
+                for (let i = 0; i < spikes; i++) {
+                    ctx.lineTo(cx + Math.cos(rot) * outerRadius, cy + Math.sin(rot) * outerRadius);
+                    rot += step;
+                    ctx.lineTo(cx + Math.cos(rot) * innerRadius, cy + Math.sin(rot) * innerRadius);
+                    rot += step;
+                }
+                ctx.lineTo(cx, cy - outerRadius);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        // Create lots of confetti
+        const confettiPieces = [];
+        const confettiCount = 300;
+
+        for (let i = 0; i < confettiCount; i++) {
+            confettiPieces.push(new ConfettiPiece());
+        }
+
+        // Burst effect - extra confetti from sides
+        class BurstConfetti extends ConfettiPiece {
+            constructor(side) {
+                super();
+                this.x = side === 'left' ? -10 : canvas.width + 10;
+                this.y = canvas.height * 0.7 + Math.random() * canvas.height * 0.3;
+                this.speedX = side === 'left' ? Math.random() * 8 + 3 : -(Math.random() * 8 + 3);
+                this.speedY = -(Math.random() * 10 + 5);
+                this.gravity = 0.15;
+                this.burst = true;
+            }
+
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                this.speedX *= 0.99;
+
+                if (this.y > canvas.height + 20) {
+                    this.x = this.speedX > 0 ? -10 : canvas.width + 10;
+                    this.y = canvas.height * 0.7 + Math.random() * canvas.height * 0.3;
+                    this.speedY = -(Math.random() * 10 + 5);
+                    this.speedX = this.speedX > 0 ? Math.random() * 8 + 3 : -(Math.random() * 8 + 3);
+                }
+            }
+        }
+
+        // Add burst confetti from both sides
+        for (let i = 0; i < 50; i++) {
+            confettiPieces.push(new BurstConfetti('left'));
+            confettiPieces.push(new BurstConfetti('right'));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (const piece of confettiPieces) {
+                piece.update();
+                piece.draw();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
